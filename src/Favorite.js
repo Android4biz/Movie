@@ -1,7 +1,7 @@
-const Favorite = ({addLikeMovieClick, movies}) => {
+const Favorite = () => {
     return (
       <>
-        <span className="material-icons" onClick={() => addLikeMovieClick(movies)}>thumb_up_alt</span>
+        <span className="material-icons" >thumb_up_alt</span>
       </>
     )
   }

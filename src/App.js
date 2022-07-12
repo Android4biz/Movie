@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { nanoid } from "nanoid";
 import "./App.scss";
 import Cards from "./Cards";
 import Header from "./layout/Header";
