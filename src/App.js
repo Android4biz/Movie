@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
+// import { nanoid } from "nanoid";
 import "./App.scss";
 import Cards from "./Cards";
-import Header from "./Header";
+import Header from "./layout/Header";
 import Favorite from "./Favorite";
-import Footer from "./Footer";
-import Likes from "./Likes";
+import Remove from "./Remove";
+import Footer from "./layout/Footer";
+
 
 function App(props) {
     const [movie, setMovie] = useState([]);
     const [value, setValue] = useState("");
     const [favorites, setFavorites] = useState([]);
-    console.log(favorites)
+
 
     const getMovieApi = async value => {
         const response = await fetch(
@@ -42,6 +44,11 @@ function App(props) {
         setFavorites(newMovie);
     };
 
+    const RemoveFavoriteMovie = (movie) => {
+        const removeMovie = favorites.filter((favorite) => favorite.imdbID !== movie.imdbID)
+        setFavorites(removeMovie)
+    }
+
     return (
       <div className="App">
         <Header
@@ -50,30 +57,20 @@ function App(props) {
           handleSubmit={handleSubmit}
         />
       <div className="main">
-          {movie.map((elem, key) =>
-            <>
-                <Cards
-                    movies={elem.Poster}
-                    key={key}
-                    title={elem.Title}
-                    year={elem.Year}
-                    addLikeMovieClick={addLikeMovie}
-                    FavoriteComponent={Favorite}
-                />
-            </>
-          )}
+          <Cards
+            movie={movie}
+            addLikeMovieClick={addLikeMovie}
+            favoriteComponent={Favorite}
+            />
       </div>
       <div className="main-favorites">
             <h5 className="title">Favorites</h5>
             <div className="cards-favorites">
-                {favorites.map((elem, key) =>
-                    <>
-                        <Likes
-                            movies={elem}
-                            key={key}
-                        />
-                    </>
-                )}
+            <Cards
+                movie={favorites}
+                addLikeMovieClick={RemoveFavoriteMovie}
+                favoriteComponent={Remove}
+            />
             </div>
       </div>
           <Footer />

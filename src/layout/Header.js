@@ -1,4 +1,4 @@
-function Header({handleChange, value, handleSubmit}) {
+function Header({ handleChange, value, handleSubmit }) {
   return (
     <>
       <nav className="navbar">

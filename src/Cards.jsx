@@ -1,22 +1,25 @@
-function Cards({ movies, title, year, addLikeMovieClick, FavoriteComponent }) {
+function Cards (props) {
+  const FavouriteComponent = props.favoriteComponent; 
   return (
-    <div className="card">
-        <h5 className="title">
-            {title}
-        </h5>
-        <h5 className="title">
-            {year}
-        </h5>
-        <img
-            src={movies}
+    <>
+      {props.movie.map((elem, key) => 
+        <div className="card" onClick={() => props.addLikeMovieClick(elem)}>
+          <h5 className="title">
+              {elem.Title}
+          </h5>
+          <h5 className="title">
+              {elem.Year}
+          </h5>
+          <img
+            src={elem.Poster}
             className="img"
             alt="movie-img"
-            onClick={() => addLikeMovieClick(movies)}
-        />
-        <div className="overlay">
-          <FavoriteComponent/>
+            id={elem.imdbID}
+          />
+            <FavouriteComponent/>
         </div>
-    </div>
+      )}
+    </>
   );
 }
 
