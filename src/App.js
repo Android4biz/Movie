@@ -6,12 +6,11 @@ import Favorite from "./Favorite";
 import Remove from "./Remove";
 import Footer from "./layout/Footer";
 
-
 function App(props) {
     const [movie, setMovie] = useState([]);
     const [value, setValue] = useState("");
     const [favorites, setFavorites] = useState([]);
-
+    const [toggle, setToggle] = useState(true)
 
     const getMovieApi = async value => {
         const response = await fetch(
@@ -30,11 +29,11 @@ function App(props) {
         [value]
     );
 
-    const handleChange = event => {
+    const handleChange = (event) => {
         setValue(event.target.value);
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = (event) => {
         event.preventDefault();
     };
 
@@ -44,36 +43,42 @@ function App(props) {
     };
 
     const RemoveFavoriteMovie = (movie) => {
-        const removeMovie = favorites.filter((favorite) => favorite.imdbID !== movie.imdbID)
-        setFavorites(removeMovie)
+        const removeMovie = favorites.filter(
+            favorite => favorite.imdbID !== movie.imdbID
+        );
+        setFavorites(removeMovie);
+    };
+
+    const favoritesFlag = () => {
+        setToggle(false)
     }
 
     return (
-      <div className="App">
-        <Header
-          value={value}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
-      <div className="main">
-          <Cards
-            movie={movie}
-            addLikeMovieClick={addLikeMovie}
-            favoriteComponent={Favorite}
+        <div className="App">
+            <Header
+                value={value}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
             />
-      </div>
-      <div className="main-favorites">
-            <h5 className="title">Favorites</h5>
-            <div className="cards-favorites">
-            <Cards
-                movie={favorites}
-                addLikeMovieClick={RemoveFavoriteMovie}
-                favoriteComponent={Remove}
-            />
+            <div className="main" onClick={()=> favoritesFlag(favorites)}>
+                <Cards
+                    movie={movie}
+                    addLikeMovieClick={addLikeMovie}
+                    favoriteComponent={Favorite}
+                />
             </div>
-      </div>
-          <Footer />
-      </div>
+            <div className="main-favorites">
+                <h5 className="title">{ toggle ? true : 'favorites' }</h5>
+                <div className="cards-favorites">
+                    <Cards
+                        movie={favorites}
+                        addLikeMovieClick={RemoveFavoriteMovie}
+                        favoriteComponent={Remove}
+                    />
+                </div>
+            </div>
+            <Footer />
+        </div>
     );
 }
 
